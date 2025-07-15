@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Profile</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #56ab2f, #a8e063);
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    header {
+      background: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {
+      height: 60px;
+    }
+    header a {
+      text-decoration: none;
+      color: #56ab2f;
+      font-weight: bold;
+      margin-left: auto;
+    }
+    .box {
+      background: white;
+      color: #333;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+    }
+    .box h2 {
+      text-align: center;
+      color: #56ab2f;
+    }
+    .box p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="satna-project.png" height="60">
+    <h1 style="margin: 0; color: #2193b0; font-size: 24px;">SATNA DIGITAL ADDRESS</h1>
+    <a href="admin.html">🔐 एडमिन</a>
+  </header>
+  <div class="box" id="info">लोड हो रहा है...</div>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const dac = urlParams.get("dac");
+
+   fetch(`https://script.google.com/macros/s/AKfycbx2mZ7vJVNotXd-eKOf1lJTylY8oDpWbnX68zM_1FqDmi6A6RDk7rHIaKkZgyr_GUxWsw/exec?dac=${dac}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error || !data.DAC) {
+        document.getElementById("info").innerText = "डेटा नहीं मिला।";
+      } else {
+        document.getElementById("info").innerHTML = `
+          <h2>डिजिटल प्रोफ़ाइल</h2>
+          <p><strong>DAC:</strong> ${data.DAC}</p>
+          <p><strong>नाम:</strong> ${data['नाम']}</p>
+          <p><strong>पूरा पता:</strong> ${data['पूरा पता']}</p>
+          <p><strong>संपत्ति कर:</strong> ₹${data['संपत्ति कर']}</p>
+          <p><strong>जल कर:</strong> ₹${data['जल कर']}</p>
+          <p><strong>बिजली बिल:</strong> ₹${data['बिजली बिल']}</p>
+          <p><strong>GST नंबर:</strong> ${data['GST नंबर']}</p>
+          <p><strong>स्वच्छता स्कोर:</strong> ${data['स्वच्छता स्कोर']}</p>
+          <p><strong>स्थानीय अधिकारी:</strong> ${data['स्थानीय अधिकारी']}</p>
+          <p><strong>शिकायत:</strong> ${data['शिकायत']}</p>
+        `;
+      }
+    })
+    .catch(err => {
+      document.getElementById("info").innerText = "नेटवर्क त्रुटि: " + err.message;
+    });
+  </script>
+</body>
+</html>

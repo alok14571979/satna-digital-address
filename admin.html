@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>एडमिन पैनल</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    header img {
+      height: 60px;
+    }
+    header a {
+      text-decoration: none;
+      color: #d97706;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 600px;
+    }
+    h2 {
+      color: #d97706;
+      margin-bottom: 20px;
+    }
+    input, textarea {
+      padding: 10px;
+      width: 100%;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 12px;
+      width: 100%;
+      background-color: #d97706;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .message {
+      margin-top: 10px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="satna-project.png" alt="Satna Smart City Logo">
+    <h1 style="margin: 0; color: #2193b0; font-size: 24px;">SATNA DIGITAL ADDRESS</h1>
+    <a href="index.html">🏠 होम</a>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>🛠️ एडमिन पैनल</h2>
+      <input type="text" id="dac" placeholder="DAC (जैसे SATNA-0001)">
+      <input type="text" id="name" placeholder="मालिक का नाम">
+      <textarea id="address" placeholder="पूरा पता"></textarea>
+      <input type="text" id="propertyTax" placeholder="संपत्ति कर (₹ में)">
+      <input type="text" id="waterTax" placeholder="जल कर (₹ में)">
+      <input type="text" id="electricityBill" placeholder="बिजली बिल (₹ में)">
+      <input type="text" id="gstNumber" placeholder="GST नंबर">
+      <input type="number" id="rating" placeholder="स्वच्छता रेटिंग (1-5)">
+      <input type="text" id="official" placeholder="स्थानीय अधिकारी">
+      <textarea id="complaint" placeholder="शिकायत"></textarea>
+      <button onclick="saveData()">💾 सहेजें</button>
+      <p id="msg" class="message"></p>
+    </div>
+  </div>
+
+  <script>
+    function saveData() {
+      const data = {
+        dac: document.getElementById('dac').value,
+        name: document.getElementById('name').value,
+        address: document.getElementById('address').value,
+        propertyTax: document.getElementById('propertyTax').value,
+        waterTax: document.getElementById('waterTax').value,
+        electricityBill: document.getElementById('electricityBill').value,
+        gstNumber: document.getElementById('gstNumber').value,
+        rating: document.getElementById('rating').value,
+        official: document.getElementById('official').value,
+        complaint: document.getElementById('complaint').value
+      };
+
+        fetch("https://script.google.com/macros/s/AKfycbx2mZ7vJVNotXd-eKOf1lJTylY8oDpWbnX68zM_1FqDmi6A6RDk7rHIaKkZgyr_GUxWsw/exec", {
+
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      }).then(() => {
+        document.getElementById('msg').innerText = '✅ जानकारी सफलतापूर्वक सहेजी गई!';
+      }).catch(() => {
+        alert('❌ त्रुटि: डाटा सहेजने में समस्या हुई।');
+      });
+    }
+  </script>
+</body>
+</html>
